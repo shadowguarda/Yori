@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.ColorFilter
 import android.graphics.LinearGradient
+import android.graphics.Outline
 import android.graphics.Paint
 import android.graphics.PixelFormat
 import android.graphics.Rect
@@ -33,18 +34,17 @@ class GlassSurfaceDrawable(
     private val isLight = ColorUtils.calculateLuminance(surfaceColor) > 0.5
     private val rect = RectF()
     private var drawAlpha = 255
+    private val baseTintAlpha = if (isLight) 215 else 205
 
     private val tintPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
-        color = ColorUtils.setAlphaComponent(surfaceColor, if (isLight) 215 else 205)
+        color = ColorUtils.setAlphaComponent(surfaceColor, baseTintAlpha)
     }
     private val sheenPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
     private val rimPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         strokeWidth = HAIRLINE_DP * density
     }
-
-    private fun radiusFor(r: RectF): Float = if (cornerRadiusPx < 0f) r.height() / 2f else cornerRadiusPx
 
     override fun onBoundsChange(bounds: Rect) {
         super.onBoundsChange(bounds)
@@ -76,8 +76,10 @@ class GlassSurfaceDrawable(
 
     override fun draw(canvas: Canvas) {
         if (rect.isEmpty) return
-        val radius = radiusFor(rect)
-        tintPaint.alpha = (tintPaint.alpha * drawAlpha) / 255
+        val radius = if (cornerRadiusPx < 0f) rect.height() / 2f else cornerRadiusPx
+        tintPaint.alpha = (baseTintAlpha * drawAlpha) / 255
+        sheenPaint.alpha = drawAlpha
+        rimPaint.alpha = drawAlpha
         canvas.drawRoundRect(rect, radius, radius, tintPaint)
         canvas.drawRoundRect(rect, radius, radius, sheenPaint)
         val half = rimPaint.strokeWidth / 2f
@@ -124,7 +126,7 @@ fun View.applyLiquidGlassSurface(cornerRadiusDp: Float = -1f) {
     background = GlassSurfaceDrawable.create(context, cornerRadiusDp)
     val radiusPx = cornerRadiusDp * resources.displayMetrics.density
     outlineProvider = object : ViewOutlineProvider() {
-        override fun getOutline(view: View, outline: android.graphics.Outline) {
+        override fun getOutline(view: View, outline: Outline) {
             val r = if (cornerRadiusDp < 0f) view.height / 2f else radiusPx
             outline.setRoundRect(0, 0, view.width, view.height, r)
         }
