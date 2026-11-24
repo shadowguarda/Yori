@@ -1,0 +1,181 @@
+name: Build and release
+
+# Default workflow for Yori: builds the release APKs, signs them, publishes them to the
+# Releases page, and if anything goes wrong writes down what failed (job summary + an issue).
+
+on:
+  workflow_dispatch:
+    inputs:
+      flavor:
+        description: 'Flavor (standard = all languages + Firebase, dev = English only, no Firebase)'
+        default: standard
+        type: choice
+        options:
+          - standard
+          - dev
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build, sign and release
+    runs-on: ubuntu-latest
+    env:
+      FLAVOR: ${{ github.event.inputs.flavor || 'standard' }}
+      BUILD_TOOLS: 35.0.0
+
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Compute version tag
+        run: |
+          echo "TAG=r$(git rev-list --count HEAD)" >> "$GITHUB_ENV"
+          echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> "$GITHUB_ENV"
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Setup Android build tools
+        run: ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager "build-tools;${BUILD_TOOLS}"
+
+      - name: Copy CI gradle.properties
+        run: |
+          mkdir -p ~/.gradle
+          cp .github/runner-files/ci-gradle.properties ~/.gradle/gradle.properties
+
+      - name: Build release APKs
+        id: build
+        run: |
+          set -o pipefail
+          FLAVOR_CAP="$(echo "${FLAVOR:0:1}" | tr a-z A-Z)${FLAVOR:1}"
+          ./gradlew assemble${FLAVOR_CAP}Release 2>&1 | tee "$RUNNER_TEMP/build.log"
+
+      - name: Prepare signing key
+        id: key
+        env:
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+          KEY_ALIAS: ${{ secrets.ALIAS }}
+          STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
+          KEY_PASSWORD_SECRET: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          set -e
+          if [ -n "$SIGNING_KEY" ]; then
+            echo "$SIGNING_KEY" | base64 -d > "$RUNNER_TEMP/release.jks"
+            echo "::add-mask::$STORE_PASSWORD"
+            echo "KS_ALIAS=$KEY_ALIAS" >> "$GITHUB_ENV"
+            echo "KS_PASS=$STORE_PASSWORD" >> "$GITHUB_ENV"
+            echo "KS_KEY_PASS=${KEY_PASSWORD_SECRET:-$STORE_PASSWORD}" >> "$GITHUB_ENV"
+            echo "KEY_KIND=your signing key" >> "$GITHUB_ENV"
+          else
+            echo "::warning::No SIGNING_KEY secret set, signing with a throwaway key. Updates will not install over builds signed with another key."
+            PASS="$(openssl rand -hex 16)"
+            echo "::add-mask::$PASS"
+            keytool -genkeypair -keystore "$RUNNER_TEMP/release.jks" -alias yori \
+              -keyalg RSA -keysize 4096 -validity 36500 \
+              -storepass "$PASS" -keypass "$PASS" -dname "CN=Yori, O=Yori, C=IN"
+            echo "KS_ALIAS=yori" >> "$GITHUB_ENV"
+            echo "KS_PASS=$PASS" >> "$GITHUB_ENV"
+            echo "KS_KEY_PASS=$PASS" >> "$GITHUB_ENV"
+            echo "KEY_KIND=a throwaway key (SIGNING_KEY secret missing, updates will not install over other builds)" >> "$GITHUB_ENV"
+          fi
+
+      - name: Align and sign APKs
+        id: sign
+        run: |
+          set -e
+          BT="${ANDROID_SDK_ROOT}/build-tools/${BUILD_TOOLS}"
+          mkdir -p signed
+          shopt -s nullglob
+          apks=(app/build/outputs/apk/${FLAVOR}/release/*-unsigned.apk)
+          [ ${#apks[@]} -gt 0 ] || { echo "No unsigned release APKs were produced"; exit 1; }
+          for apk in "${apks[@]}"; do
+            base="$(basename "$apk" -unsigned.apk)"            # app-standard-arm64-v8a-release
+            abi="${base#app-${FLAVOR}-}"; abi="${abi%-release}"  # arm64-v8a | universal | ...
+            if [ "$abi" = "universal" ]; then out="yori-${TAG}.apk"; else out="yori-${abi}-${TAG}.apk"; fi
+            "$BT/zipalign" -p -f 4 "$apk" "$RUNNER_TEMP/$base-aligned.apk"
+            "$BT/apksigner" sign \
+              --ks "$RUNNER_TEMP/release.jks" \
+              --ks-key-alias "$KS_ALIAS" \
+              --ks-pass "pass:$KS_PASS" \
+              --key-pass "pass:$KS_KEY_PASS" \
+              --out "signed/$out" \
+              "$RUNNER_TEMP/$base-aligned.apk"
+            "$BT/apksigner" verify "signed/$out"
+          done
+          (cd signed && sha256sum *.apk > SHA256SUMS.txt)
+          ls -lh signed
+
+      - name: Upload APKs as workflow artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: yori-${{ env.TAG }}
+          path: signed/*.apk
+          if-no-files-found: error
+
+      - name: Publish to Releases
+        id: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          notes="Build \`${TAG}\` from commit ${GITHUB_SHA} (flavor: ${FLAVOR}).
+
+          Signed with ${KEY_KIND}.
+
+          $(git log -1 --pretty=%B)"
+          gh release delete "$TAG" --yes --cleanup-tag 2>/dev/null || true
+          gh release create "$TAG" signed/* \
+            --target "$GITHUB_SHA" \
+            --title "Yori ${TAG}" \
+            --notes "$notes" \
+            --prerelease
+
+      - name: Report what went wrong
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OUTCOMES: "build=${{ steps.build.outcome }}, signing key=${{ steps.key.outcome }}, sign=${{ steps.sign.outcome }}, release=${{ steps.release.outcome }}"
+        run: |
+          log="$RUNNER_TEMP/build.log"
+          errors=""
+          if [ -f "$log" ]; then
+            errors="$(grep -E '^e: |^error: |FAILURE:|What went wrong|Execution failed|Could not (resolve|find|get)|Unresolved reference|AAPT:|error:' "$log" \
+              | sed 's#file:///home/runner/work/[^/]*/[^/]*/##' | awk '!seen[$0]++' | head -40)"
+          fi
+          failed_step="$(echo "$OUTCOMES" | tr ',' '\n' | grep 'failure' | head -1 | sed 's/=.*//; s/^ *//')"
+          [ -n "$failed_step" ] || failed_step="an earlier setup step (see the run log)"
+          [ -n "$errors" ] || errors="No Gradle error lines were captured. Open the failing step in the run log."
+
+          body="Build \`${TAG}\` (commit ${SHORT_SHA}) failed.
+
+          **Failed step:** ${failed_step}
+
+          **Errors:**
+          \`\`\`
+          ${errors}
+          \`\`\`
+
+          Run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+
+          { echo "## Build failed"; echo; echo "$body"; } >> "$GITHUB_STEP_SUMMARY"
+          # Forks have Issues turned off by default; the summary above is always written
+          gh issue create --title "Build failed: ${SHORT_SHA}" --body "$body" \
+            || echo "::warning::Could not open an issue (are Issues enabled in the repo settings?). The error is in the job summary."
