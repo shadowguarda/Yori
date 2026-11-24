@@ -396,7 +396,7 @@ open class LibraryController(
             val padding = max((-pad).toInt(), systemInsets?.bottom ?: 0)
             bottomSheet.updatePaddingRelative(bottom = padding)
 
-            bottomSheet.sheetBehavior?.peekHeight = 60.dpToPx + padding
+            bottomSheet.sheetBehavior?.peekHeight = if (bottomSheet.sheetBehavior.isHidden()) 0 else 60.dpToPx + padding
             updateHopperY()
             binding.fastScroller.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 bottomMargin = -pad.toInt()
@@ -404,7 +404,7 @@ open class LibraryController(
         } else {
             bottomSheet.updatePaddingRelative(bottom = systemInsets?.bottom ?: 0)
             updateHopperY()
-            bottomSheet.sheetBehavior?.peekHeight = 60.dpToPx + (systemInsets?.bottom ?: 0)
+            bottomSheet.sheetBehavior?.peekHeight = if (bottomSheet.sheetBehavior.isHidden()) 0 else 60.dpToPx + (systemInsets?.bottom ?: 0)
         }
     }
 
