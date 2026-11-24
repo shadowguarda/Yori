@@ -29,7 +29,7 @@ jobs:
     name: Build app
     runs-on: ubuntu-latest
     env:
-      SIGNING_AVAILABLE: ${{ env.SIGNING_AVAILABLE == 'true' }}
+      SIGNING_AVAILABLE: ${{ secrets.SIGNING_KEY != '' && secrets.ALIAS != '' && secrets.KEY_STORE_PASSWORD != '' && secrets.KEY_PASSWORD != '' }}
       NIGHTLY_TOKEN_AVAILABLE: ${{ secrets.NIGHTLY_PAT != '' }}
 
     steps:
@@ -172,7 +172,7 @@ jobs:
           path: app/build/outputs/apk/standard/*/app*-*.apk
 
       - name: Clean up build artifacts
-        if: env.VERSION_TAG != '' && secrets.SIGNING_KEY != '' && secrets.ALIAS != '' && secrets.KEY_STORE_PASSWORD != '' && secrets.KEY_PASSWORD != ''
+        if: env.VERSION_TAG != '' && env.SIGNING_AVAILABLE == 'true'
         run: |
           set -e
 
