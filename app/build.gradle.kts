@@ -64,19 +64,14 @@ android {
         buildConfigField("Boolean", "BETA", "false")
         buildConfigField("Boolean", "NIGHTLY", "false")
 
-        ndk {
-            // False positive, we have x86 abi support
-            //noinspection ChromeOsAbiSupport
-            abiFilters += supportedAbis
-        }
+        // ABIs are limited by the splits block below; AGP rejects ndk.abiFilters together with splits when
+        // the universal APK is disabled
     }
 
     splits {
         abi {
             isEnable = true
             reset()
-            // False positive, we have x86 abi support
-            //noinspection ChromeOsAbiSupport
             include(*supportedAbis.toTypedArray())
             // A universal APK bundles every ABI and is roughly twice the size of a single-ABI one
             isUniversalApk = false
