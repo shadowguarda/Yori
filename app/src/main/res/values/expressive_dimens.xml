@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Material 3 Expressive shape scale: generous squircle / pill corners -->
+    <dimen name="expressive_corner_small">12dp</dimen>
+    <dimen name="expressive_corner_medium">20dp</dimen>
+    <dimen name="expressive_corner_large">28dp</dimen>
+    <dimen name="expressive_corner_extra_large">40dp</dimen>
+    <dimen name="expressive_pill_height">48dp</dimen>
+    <dimen name="expressive_pill_margin">12dp</dimen>
+</resources>
