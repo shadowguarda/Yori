@@ -481,7 +481,7 @@ open class MainActivity : BaseActivity<MainActivityBinding>() {
         nav.isVisible = false
         content.doOnApplyWindowInsetsCompat { v, insets, _ ->
             setNavBarColor(insets)
-            val systemInsets = insets.ignoredSystemInsets
+            val systemInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             val contextView = window?.decorView?.findViewById<View>(R.id.action_mode_bar)
             contextView?.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 leftMargin = systemInsets.left
