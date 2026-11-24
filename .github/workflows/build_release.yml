@@ -148,7 +148,7 @@ jobs:
             --target "$GITHUB_SHA" \
             --title "Yori ${TAG}" \
             --notes "$notes" \
-            --prerelease
+            --latest
 
       - name: Report what went wrong
         if: failure()
