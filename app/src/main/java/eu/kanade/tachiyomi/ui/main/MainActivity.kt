@@ -499,6 +499,9 @@ open class MainActivity : BaseActivity<MainActivityBinding>() {
             binding.bottomNav?.updatePadding(
                 bottom = systemInsets.bottom + resources.getDimensionPixelSize(R.dimen.glass_nav_margin_bottom),
             )
+            binding.continuePill?.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                bottomMargin = systemInsets.bottom + resources.getDimensionPixelSize(R.dimen.glass_nav_margin_bottom)
+            }
             binding.sideNav?.updatePadding(
                 left = 0,
                 right = 0,
