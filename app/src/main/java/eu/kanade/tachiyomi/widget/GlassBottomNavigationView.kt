@@ -16,7 +16,6 @@ import android.os.Build
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewOutlineProvider
 import android.view.ViewTreeObserver
 import androidx.annotation.RequiresApi
 import androidx.core.graphics.ColorUtils
@@ -84,7 +83,7 @@ class GlassBottomNavigationView @JvmOverloads constructor(
         // Material would otherwise fill the whole view with a flat bar background
         setBackgroundColor(Color.TRANSPARENT)
         elevation = 0f
-        outlineProvider = ViewOutlineProvider.NONE
+        outlineProvider = null
         clipToPadding = false
         clipChildren = false
         setWillNotDraw(false)
