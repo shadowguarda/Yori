@@ -161,8 +161,15 @@ jobs:
           keyPassword: ${{ secrets.KEY_PASSWORD }}
           summarise: true
 
+      - name: Upload unsigned APKs when signing is unavailable
+        if: env.VERSION_TAG != '' && (secrets.SIGNING_KEY == '' || secrets.ALIAS == '' || secrets.KEY_STORE_PASSWORD == '' || secrets.KEY_PASSWORD == '')
+        uses: actions/upload-artifact@v7
+        with:
+          name: unsigned-apks-${{ github.sha }}
+          path: app/build/outputs/apk/standard/*/app*-*.apk
+
       - name: Clean up build artifacts
-        if: env.VERSION_TAG != ''
+        if: env.VERSION_TAG != '' && secrets.SIGNING_KEY != '' && secrets.ALIAS != '' && secrets.KEY_STORE_PASSWORD != '' && secrets.KEY_PASSWORD != ''
         run: |
           set -e
 
@@ -189,7 +196,7 @@ jobs:
           echo "APK_X86_64_SHA=$sha" >> $GITHUB_ENV
 
       - name: Create Release
-        if: startsWith(env.VERSION_TAG, 'v')
+        if: startsWith(env.VERSION_TAG, 'v') && secrets.SIGNING_KEY != ''
         uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ env.VERSION_TAG }}
@@ -225,7 +232,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Nightly
-        if: startsWith(env.VERSION_TAG, 'r')
+        if: startsWith(env.VERSION_TAG, 'r') && secrets.SIGNING_KEY != '' && secrets.NIGHTLY_PAT != ''
         uses: softprops/action-gh-release@v3
         with:
           repository: shadowguarda/yori-nightly
