@@ -28,6 +28,9 @@ jobs:
   build:
     name: Build app
     runs-on: ubuntu-latest
+    env:
+      SIGNING_AVAILABLE: ${{ env.SIGNING_AVAILABLE == 'true' }}
+      NIGHTLY_TOKEN_AVAILABLE: ${{ secrets.NIGHTLY_PAT != '' }}
 
     steps:
       - name: Clone repo
@@ -162,7 +165,7 @@ jobs:
           summarise: true
 
       - name: Upload unsigned APKs when signing is unavailable
-        if: env.VERSION_TAG != '' && (secrets.SIGNING_KEY == '' || secrets.ALIAS == '' || secrets.KEY_STORE_PASSWORD == '' || secrets.KEY_PASSWORD == '')
+        if: env.VERSION_TAG != '' && env.SIGNING_AVAILABLE != 'true'
         uses: actions/upload-artifact@v7
         with:
           name: unsigned-apks-${{ github.sha }}
@@ -196,7 +199,7 @@ jobs:
           echo "APK_X86_64_SHA=$sha" >> $GITHUB_ENV
 
       - name: Create Release
-        if: startsWith(env.VERSION_TAG, 'v') && secrets.SIGNING_KEY != ''
+        if: startsWith(env.VERSION_TAG, 'v') && env.SIGNING_AVAILABLE == 'true'
         uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ env.VERSION_TAG }}
@@ -232,7 +235,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Nightly
-        if: startsWith(env.VERSION_TAG, 'r') && secrets.SIGNING_KEY != '' && secrets.NIGHTLY_PAT != ''
+        if: startsWith(env.VERSION_TAG, 'r') && env.SIGNING_AVAILABLE == 'true' && env.NIGHTLY_TOKEN_AVAILABLE == 'true'
         uses: softprops/action-gh-release@v3
         with:
           repository: shadowguarda/yori-nightly
