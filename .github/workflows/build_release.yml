@@ -140,6 +140,8 @@ jobs:
 
           Signed with ${KEY_KIND}.
 
+          Download \`yori-arm64-v8a-${TAG}.apk\` for almost every phone made since 2017. Use \`yori-armeabi-v7a-${TAG}.apk\` only for old 32-bit devices.
+
           $(git log -1 --pretty=%B)"
           gh release delete "$TAG" --yes --cleanup-tag 2>/dev/null || true
           gh release create "$TAG" signed/* \

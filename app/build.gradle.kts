@@ -45,7 +45,8 @@ val buildTime: String by lazy {
     LocalDateTime.now(ZoneOffset.UTC).format(df)
 }
 
-val supportedAbis = setOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
+// Phones only: x86/x86_64 (emulators, Chromebooks) are dropped to keep the APKs small
+val supportedAbis = setOf("armeabi-v7a", "arm64-v8a")
 
 android {
     defaultConfig {
@@ -77,7 +78,8 @@ android {
             // False positive, we have x86 abi support
             //noinspection ChromeOsAbiSupport
             include(*supportedAbis.toTypedArray())
-            isUniversalApk = true
+            // A universal APK bundles every ABI and is roughly twice the size of a single-ABI one
+            isUniversalApk = false
         }
     }
 
