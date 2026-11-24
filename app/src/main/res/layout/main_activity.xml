@@ -119,10 +119,12 @@
                 android:layout_marginTop="4dp"
                 app:cardBackgroundColor="?colorPrimaryVariant"
                 android:layout_marginBottom="4dp"
-                app:strokeWidth="0dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                app:cardCornerRadius="24dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="#33808080"
+                app:cardElevation="2dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                app:cardCornerRadius="@dimen/expressive_corner_large"
                 android:layout_height="match_parent" >
 
                 <eu.kanade.tachiyomi.ui.base.FloatingToolbar
