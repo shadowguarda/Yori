@@ -154,8 +154,10 @@ jobs:
           echo "STAGE=${stage}" >> $GITHUB_OUTPUT
 
       - name: Sign APK
+        id: sign_apk
         uses: null2264/actions/android-signer@363cb9cf3d66bd9c72ed6860142c6b2c121d7e94
-        if: env.VERSION_TAG != ''
+        if: env.VERSION_TAG != '' && env.SIGNING_AVAILABLE == 'true' && env.SIGNING_SUCCEEDED == 'true'
+        continue-on-error: true
         with:
           releaseDir: app/build/outputs/apk/standard/${{ steps.version_stage.outputs.STAGE }}
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
@@ -164,8 +166,19 @@ jobs:
           keyPassword: ${{ secrets.KEY_PASSWORD }}
           summarise: true
 
-      - name: Upload unsigned APKs when signing is unavailable
-        if: env.VERSION_TAG != '' && env.SIGNING_AVAILABLE != 'true'
+      - name: Record signing result
+        if: always() && env.VERSION_TAG != ''
+        shell: bash
+        run: |
+          if [ "${{ steps.sign_apk.outcome }}" = "success" ]; then
+            echo "SIGNING_SUCCEEDED=true" >> "$GITHUB_ENV"
+          else
+            echo "SIGNING_SUCCEEDED=false" >> "$GITHUB_ENV"
+            echo "Signing unavailable or failed; retaining unsigned APK artifacts."
+          fi
+
+      - name: Upload unsigned APKs when signing is unavailable or fails
+        if: always() && env.VERSION_TAG != '' && (env.SIGNING_AVAILABLE != 'true' || steps.sign_apk.outcome != 'success')
         uses: actions/upload-artifact@v7
         with:
           name: unsigned-apks-${{ github.sha }}
@@ -199,7 +212,7 @@ jobs:
           echo "APK_X86_64_SHA=$sha" >> $GITHUB_ENV
 
       - name: Create Release
-        if: startsWith(env.VERSION_TAG, 'v') && env.SIGNING_AVAILABLE == 'true'
+        if: startsWith(env.VERSION_TAG, 'v') && env.SIGNING_SUCCEEDED == 'true'
         uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ env.VERSION_TAG }}
@@ -235,7 +248,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Nightly
-        if: startsWith(env.VERSION_TAG, 'r') && env.SIGNING_AVAILABLE == 'true' && env.NIGHTLY_TOKEN_AVAILABLE == 'true'
+        if: startsWith(env.VERSION_TAG, 'r') && env.SIGNING_SUCCEEDED == 'true' && env.NIGHTLY_TOKEN_AVAILABLE == 'true'
         uses: softprops/action-gh-release@v3
         with:
           repository: shadowguarda/yori-nightly
