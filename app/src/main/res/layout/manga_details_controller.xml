@@ -84,6 +84,8 @@
         android:text="@string/read"
         android:visibility="gone"
         app:icon="@drawable/ic_play_arrow_24dp"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Yori.Pill"
+        app:elevation="3dp"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="16dp"
         android:layout_width="wrap_content"

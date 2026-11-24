@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Material 3 Expressive shape overlays -->
+    <style name="ShapeAppearance.Yori.Pill" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="ShapeAppearance.Yori.ExtraLarge" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/expressive_corner_extra_large</item>
+    </style>
+</resources>
