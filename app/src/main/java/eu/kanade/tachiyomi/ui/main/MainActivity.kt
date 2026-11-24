@@ -17,6 +17,7 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.provider.Settings
 import android.view.GestureDetector
+import android.view.HapticFeedbackConstants
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
@@ -27,6 +28,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
 import android.view.animation.DecelerateInterpolator
+import android.view.animation.OvershootInterpolator
 import androidx.activity.BackEventCompat
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
@@ -134,6 +136,9 @@ import eu.kanade.tachiyomi.util.view.setTitle
 import eu.kanade.tachiyomi.util.view.snack
 import eu.kanade.tachiyomi.util.view.withFadeInTransaction
 import eu.kanade.tachiyomi.util.view.withFadeTransaction
+import eu.kanade.tachiyomi.data.database.models.MangaChapterHistory
+import eu.kanade.tachiyomi.widget.ExpressiveMotion
+import eu.kanade.tachiyomi.widget.applyLiquidGlassSurface
 import kotlin.collections.set
 import kotlin.math.abs
 import kotlin.math.min
@@ -172,6 +177,7 @@ open class MainActivity : BaseActivity<MainActivityBinding>() {
     private val extensionManager: ExtensionManager by injectLazy()
 
     private val getRecents: GetRecents by injectLazy()
+    private var continueTarget: MangaChapterHistory? = null
 
     private val hideBottomNav
         get() = router.backstackSize > 1 && router.backstack[1].controller !is DialogController
@@ -554,6 +560,8 @@ open class MainActivity : BaseActivity<MainActivityBinding>() {
             }
             true
         }
+
+        setupContinuePill()
 
         if (!router.hasRootController()) {
             // Set start screen
@@ -955,6 +963,57 @@ open class MainActivity : BaseActivity<MainActivityBinding>() {
         setExtensionsBadge()
         showDLQueueTutorial()
         reEnableBackPressedCallBack()
+        refreshContinuePill()
+    }
+
+    /** Floating glass "continue reading" pill that sits above the bottom nav and follows it when it hides. */
+    private fun setupContinuePill() {
+        val pill = binding.continuePill ?: return
+        val bottomNav = binding.bottomNav ?: return
+        pill.applyLiquidGlassSurface()
+        pill.setOnClickListener {
+            val target = continueTarget ?: return@setOnClickListener
+            it.performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK)
+            startActivity(ReaderActivity.newIntent(this, target.manga, target.chapter))
+        }
+        binding.root.viewTreeObserver.addOnPreDrawListener {
+            pill.translationY = bottomNav.translationY
+            pill.alpha = bottomNav.alpha
+            val visibility = if (continueTarget != null && bottomNav.isVisible) View.VISIBLE else View.INVISIBLE
+            if (pill.visibility != visibility) {
+                pill.visibility = visibility
+                if (visibility == View.VISIBLE) {
+                    pill.scaleX = 0.8f
+                    pill.scaleY = 0.8f
+                    pill.animate()
+                        .scaleX(1f)
+                        .scaleY(1f)
+                        .setDuration(ExpressiveMotion.STANDARD_DURATION_MS)
+                        .setInterpolator(OvershootInterpolator(1.4f))
+                        .start()
+                }
+            }
+            true
+        }
+    }
+
+    private fun refreshContinuePill() {
+        val label = binding.continuePillText ?: return
+        lifecycleScope.launchUI {
+            val last = getRecents.awaitUngrouped(true, true, "", 0).maxByOrNull { it.history.last_read }
+            if (last == null || last.chapter.read) {
+                continueTarget = null
+                return@launchUI
+            }
+            continueTarget = last
+            val number = last.chapter.chapter_number
+            val chapterLabel = when {
+                number < 0f -> last.chapter.name
+                number % 1f == 0f -> "Ch. ${number.toInt()}"
+                else -> "Ch. $number"
+            }
+            label.text = "${last.manga.title} · $chapterLabel"
+        }
     }
 
     private fun showDLQueueTutorial() {

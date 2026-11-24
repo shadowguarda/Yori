@@ -15,6 +15,7 @@ import android.graphics.Shader
 import android.os.Build
 import android.util.AttributeSet
 import android.view.Choreographer
+import android.view.HapticFeedbackConstants
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
@@ -239,9 +240,11 @@ class GlassBottomNavigationView @JvmOverloads constructor(
     private fun retarget(snap: Boolean) {
         val item = findViewById<View>(selectedItemId) ?: return
         if (item.width == 0) return
+        val selectionChanged = selectedItemId != lastSelectedId
         lensTarget = centreOf(item)
         lensItemWidth = item.width.toFloat()
         lastSelectedId = selectedItemId
+        if (selectionChanged && lensInit && !snap) performHapticFeedback(HapticFeedbackConstants.CLOCK_TICK)
         if (snap || !lensInit) {
             lensX = lensTarget
             lensV = 0f
