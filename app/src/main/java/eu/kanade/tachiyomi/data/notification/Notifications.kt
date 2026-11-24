@@ -8,8 +8,8 @@ import android.content.Context
 import android.os.Build
 import androidx.core.app.NotificationManagerCompat
 import eu.kanade.tachiyomi.R
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import yori.i18n.MR
+import yori.util.lang.getString
 import dev.icerock.moko.resources.compose.stringResource
 import eu.kanade.tachiyomi.util.system.notificationManager
 

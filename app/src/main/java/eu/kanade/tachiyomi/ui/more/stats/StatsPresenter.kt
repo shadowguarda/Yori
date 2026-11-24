@@ -19,11 +19,11 @@ import kotlinx.coroutines.runBlocking
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import uy.kohesive.injekt.injectLazy
-import yokai.data.DatabaseHandler
-import yokai.domain.manga.interactor.GetLibraryManga
-import yokai.domain.track.interactor.GetTrack
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import yori.data.DatabaseHandler
+import yori.domain.manga.interactor.GetLibraryManga
+import yori.domain.track.interactor.GetTrack
+import yori.i18n.MR
+import yori.util.lang.getString
 
 /**
  * Presenter of [StatsController].

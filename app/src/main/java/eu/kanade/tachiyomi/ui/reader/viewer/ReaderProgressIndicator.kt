@@ -17,8 +17,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.AbstractComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.view.isVisible
-import yokai.presentation.component.CombinedCircularProgressIndicator
-import yokai.presentation.theme.YokaiTheme
+import yori.presentation.component.CombinedCircularProgressIndicator
+import yori.presentation.theme.YoriTheme
 
 /**
  * A custom progress bar that always rotates while being determinate. By always rotating we give
@@ -45,7 +45,7 @@ class ReaderProgressIndicator @JvmOverloads constructor(
 
     @Composable
     override fun Content() {
-        YokaiTheme {
+        YoriTheme {
             CombinedCircularProgressIndicator(progress = { progress }, isInverted = { isInvertedFromTheme })
         }
     }

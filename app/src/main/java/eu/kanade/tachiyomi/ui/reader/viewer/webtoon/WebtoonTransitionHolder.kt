@@ -21,9 +21,9 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import yokai.i18n.MR
-import yokai.presentation.theme.YokaiTheme
-import yokai.util.lang.getString
+import yori.i18n.MR
+import yori.presentation.theme.YoriTheme
+import yori.util.lang.getString
 
 /**
  * Holder of the webtoon viewer that contains a chapter transition.
@@ -111,7 +111,7 @@ class WebtoonTransitionHolder(
             layoutParams = FrameLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT, Gravity.CENTER)
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnDetachedFromWindowOrReleasedFromPool)
             setContent {
-                YokaiTheme { CircularProgressIndicator() }
+                YoriTheme { CircularProgressIndicator() }
             }
         }
 

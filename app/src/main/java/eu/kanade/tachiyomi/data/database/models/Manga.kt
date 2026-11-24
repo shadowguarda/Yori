@@ -21,13 +21,13 @@ import java.util.Locale
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import uy.kohesive.injekt.injectLazy
-import yokai.data.updateStrategyAdapter
-import yokai.domain.chapter.interactor.GetChapter
-import yokai.domain.manga.interactor.UpdateManga
-import yokai.domain.manga.models.MangaCover
-import yokai.domain.manga.models.MangaUpdate
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import yori.data.updateStrategyAdapter
+import yori.domain.chapter.interactor.GetChapter
+import yori.domain.manga.interactor.UpdateManga
+import yori.domain.manga.models.MangaCover
+import yori.domain.manga.models.MangaUpdate
+import yori.i18n.MR
+import yori.util.lang.getString
 
 fun Manga.sortDescending(preferences: PreferencesHelper): Boolean =
     if (usesLocalSort) sortDescending else preferences.chaptersDescAsDefault().get()

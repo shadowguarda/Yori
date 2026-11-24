@@ -8,8 +8,8 @@ import eu.kanade.tachiyomi.util.lang.withSubtitle
 import eu.kanade.tachiyomi.util.system.toInt
 import eu.kanade.tachiyomi.widget.BaseLibraryDisplayView
 import kotlin.math.min
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import yori.i18n.MR
+import yori.util.lang.getString
 
 class LibraryCategoryView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     BaseLibraryDisplayView<LibraryCategoryLayoutBinding>(context, attrs) {

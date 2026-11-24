@@ -186,13 +186,13 @@
         <item name="android:textColorHint">@color/material_on_background_disabled</item>
     </style>
 
-    <style name="Theme.Widget.Yokai.AlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
-        <item name="alertDialogStyle">@style/Widget.Yokai.AlertDialog</item>
+    <style name="Theme.Widget.Yori.AlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="alertDialogStyle">@style/Widget.Yori.AlertDialog</item>
         <item name="elevationOverlayEnabled">true</item>
         <item name="elevationOverlayColor">?colorSecondary</item>
     </style>
 
-    <style name="Widget.Yokai.AlertDialog" parent="MaterialAlertDialog.Material3">
+    <style name="Widget.Yori.AlertDialog" parent="MaterialAlertDialog.Material3">
         <item name="backgroundTint">?attr/colorSurface</item>
     </style>
 
@@ -280,6 +280,15 @@
 
     <style name="Widget.Tachiyomi.CompoundButton.RadioButton" parent="Base.Widget.Material3.CompoundButton.RadioButton">
         <item name="buttonTint">@null</item>
+    </style>
+
+    <style name="Widget.Yori.GlassBottomNavigationView" parent="Widget.Tachiyomi.BottomNavigationView">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:paddingLeft">@dimen/glass_nav_margin_horizontal</item>
+        <item name="android:paddingRight">@dimen/glass_nav_margin_horizontal</item>
+        <item name="android:paddingTop">@dimen/glass_nav_margin_top</item>
+        <item name="android:elevation">0dp</item>
+        <item name="elevation">0dp</item>
     </style>
 
     <style name="Widget.Tachiyomi.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">

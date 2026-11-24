@@ -44,4 +44,9 @@
     <dimen name="material_component_lists_padding_above_list">8dp</dimen>
     <dimen name="material_component_lists_two_line_height">56dp</dimen>
     <dimen name="material_component_lists_text_left_padding">72dp</dimen>
+
+    <!-- Floating glass bottom navigation bar -->
+    <dimen name="glass_nav_margin_horizontal">16dp</dimen>
+    <dimen name="glass_nav_margin_top">8dp</dimen>
+    <dimen name="glass_nav_margin_bottom">10dp</dimen>
 </resources>

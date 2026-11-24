@@ -21,8 +21,8 @@ import eu.kanade.tachiyomi.util.system.tryToSetForeground
 import eu.kanade.tachiyomi.util.system.withIOContext
 import eu.kanade.tachiyomi.util.system.workManager
 import kotlinx.coroutines.CancellationException
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import yori.i18n.MR
+import yori.util.lang.getString
 
 class BackupRestoreJob(val context: Context, workerParams: WorkerParameters) : CoroutineWorker(context, workerParams) {
 

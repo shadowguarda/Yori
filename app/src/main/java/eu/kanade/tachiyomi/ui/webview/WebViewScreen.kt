@@ -5,9 +5,9 @@ import androidx.compose.ui.platform.LocalContext
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import eu.kanade.tachiyomi.util.compose.currentOrThrow
-import yokai.presentation.webview.WebViewScreenContent
-import yokai.util.AssistContentScreen
-import yokai.util.Screen
+import yori.presentation.webview.WebViewScreenContent
+import yori.util.AssistContentScreen
+import yori.util.Screen
 
 class WebViewScreen(
     private val url: String,

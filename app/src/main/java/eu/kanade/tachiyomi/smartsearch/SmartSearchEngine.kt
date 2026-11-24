@@ -11,9 +11,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.supervisorScope
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.manga.interactor.GetManga
-import yokai.domain.manga.interactor.InsertManga
-import yokai.util.normalizedLevenshteinSimilarity
+import yori.domain.manga.interactor.GetManga
+import yori.domain.manga.interactor.InsertManga
+import yori.util.normalizedLevenshteinSimilarity
 
 class SmartSearchEngine(
     parentContext: CoroutineContext,

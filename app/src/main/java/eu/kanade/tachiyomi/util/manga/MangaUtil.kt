@@ -3,7 +3,7 @@ package eu.kanade.tachiyomi.util.manga
 import eu.kanade.tachiyomi.domain.manga.models.Manga
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import yokai.domain.manga.interactor.SetExcludedScanlators
+import yori.domain.manga.interactor.SetExcludedScanlators
 
 object MangaUtil {
     suspend fun setScanlatorFilter(

@@ -21,10 +21,10 @@ import eu.kanade.tachiyomi.util.view.withFadeTransaction
 import eu.kanade.tachiyomi.widget.TriStateCheckBox
 import kotlinx.coroutines.runBlocking
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.category.interactor.GetCategories
-import yokai.domain.category.interactor.InsertCategories
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import yori.domain.category.interactor.GetCategories
+import yori.domain.category.interactor.InsertCategories
+import yori.i18n.MR
+import yori.util.lang.getString
 import android.R as AR
 
 class ManageCategoryDialog(bundle: Bundle? = null) :

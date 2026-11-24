@@ -17,9 +17,9 @@ import kotlinx.coroutines.withContext
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.manga.interactor.GetManga
-import yokai.domain.track.interactor.GetTrack
-import yokai.domain.track.interactor.InsertTrack
+import yori.domain.manga.interactor.GetManga
+import yori.domain.track.interactor.GetTrack
+import yori.domain.track.interactor.InsertTrack
 
 class DelayedTrackingUpdateJob(context: Context, workerParams: WorkerParameters) :
     CoroutineWorker(context, workerParams) {

@@ -143,14 +143,14 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import uy.kohesive.injekt.injectLazy
-import yokai.core.migration.Migrator
-import yokai.domain.base.BasePreferences
-import yokai.domain.recents.interactor.GetRecents
-import yokai.i18n.MR
-import yokai.presentation.core.Constants
-import yokai.presentation.extension.repo.ExtensionRepoController
-import yokai.presentation.onboarding.OnboardingController
-import yokai.util.lang.getString
+import yori.core.migration.Migrator
+import yori.domain.base.BasePreferences
+import yori.domain.recents.interactor.GetRecents
+import yori.i18n.MR
+import yori.presentation.core.Constants
+import yori.presentation.extension.repo.ExtensionRepoController
+import yori.presentation.onboarding.OnboardingController
+import yori.util.lang.getString
 import android.R as AR
 
 @SuppressLint("ResourceType")
@@ -491,7 +491,7 @@ open class MainActivity : BaseActivity<MainActivityBinding>() {
                 top = systemInsets.top,
             )
             binding.bottomNav?.updatePadding(
-                bottom = systemInsets.bottom,
+                bottom = systemInsets.bottom + resources.getDimensionPixelSize(R.dimen.glass_nav_margin_bottom),
             )
             binding.sideNav?.updatePadding(
                 left = 0,

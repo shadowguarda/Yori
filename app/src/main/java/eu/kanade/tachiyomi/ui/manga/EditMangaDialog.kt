@@ -40,12 +40,12 @@ import kotlinx.coroutines.runBlocking
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.manga.interactor.GetManga
-import yokai.domain.manga.models.cover
-import yokai.i18n.MR
-import yokai.util.coil.asTarget
-import yokai.util.coil.loadManga
-import yokai.util.lang.getString
+import yori.domain.manga.interactor.GetManga
+import yori.domain.manga.models.cover
+import yori.i18n.MR
+import yori.util.coil.asTarget
+import yori.util.coil.loadManga
+import yori.util.lang.getString
 import android.R as AR
 
 class EditMangaDialog : DialogController {

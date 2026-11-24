@@ -20,8 +20,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import yori.i18n.MR
+import yori.util.lang.getString
 
 class SourceManager(
     private val context: Context,

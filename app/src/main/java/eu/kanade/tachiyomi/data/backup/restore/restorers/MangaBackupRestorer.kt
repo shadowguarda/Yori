@@ -17,21 +17,21 @@ import eu.kanade.tachiyomi.util.system.launchNow
 import kotlin.math.max
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import yokai.data.DatabaseHandler
-import yokai.domain.category.interactor.GetCategories
-import yokai.domain.category.interactor.SetMangaCategories
-import yokai.domain.chapter.interactor.GetChapter
-import yokai.domain.chapter.interactor.InsertChapter
-import yokai.domain.chapter.interactor.UpdateChapter
-import yokai.domain.history.interactor.GetHistory
-import yokai.domain.history.interactor.UpsertHistory
-import yokai.domain.library.custom.model.CustomMangaInfo
-import yokai.domain.manga.interactor.GetExcludedScanlators
-import yokai.domain.manga.interactor.GetManga
-import yokai.domain.manga.interactor.InsertManga
-import yokai.domain.manga.interactor.UpdateManga
-import yokai.domain.track.interactor.GetTrack
-import yokai.domain.track.interactor.InsertTrack
+import yori.data.DatabaseHandler
+import yori.domain.category.interactor.GetCategories
+import yori.domain.category.interactor.SetMangaCategories
+import yori.domain.chapter.interactor.GetChapter
+import yori.domain.chapter.interactor.InsertChapter
+import yori.domain.chapter.interactor.UpdateChapter
+import yori.domain.history.interactor.GetHistory
+import yori.domain.history.interactor.UpsertHistory
+import yori.domain.library.custom.model.CustomMangaInfo
+import yori.domain.manga.interactor.GetExcludedScanlators
+import yori.domain.manga.interactor.GetManga
+import yori.domain.manga.interactor.InsertManga
+import yori.domain.manga.interactor.UpdateManga
+import yori.domain.track.interactor.GetTrack
+import yori.domain.track.interactor.InsertTrack
 
 class MangaBackupRestorer(
     private val customMangaManager: CustomMangaManager = Injekt.get(),

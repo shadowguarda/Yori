@@ -17,9 +17,9 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.view.isVisible
 import dev.icerock.moko.resources.StringResource
 import eu.kanade.tachiyomi.util.isTablet
-import yokai.presentation.component.EmptyScreen
-import yokai.presentation.theme.YokaiTheme
-import yokai.util.lang.getString
+import yori.presentation.component.EmptyScreen
+import yori.presentation.theme.YoriTheme
+import yori.util.lang.getString
 
 class EmptyView @JvmOverloads constructor(
     context: Context,
@@ -38,7 +38,7 @@ class EmptyView @JvmOverloads constructor(
 
     @Composable
     override fun Content() {
-        YokaiTheme {
+        YoriTheme {
             EmptyScreen(
                 image = image,
                 message = message,

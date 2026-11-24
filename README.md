@@ -1,10 +1,10 @@
 <div align="center">
 
-<a href="https://github.com/null2264/yokai">
-    <img src="./.github/readme-images/app-icon.webp" alt="Yokai logo" height="200px" width="200px" />
+<a href="https://github.com/shadowguarda/yori">
+    <img src="./.github/readme-images/app-icon.webp" alt="Yori logo" height="200px" width="200px" />
 </a>
 
-# Yōkai
+# Yori
 
 </div>
 
@@ -13,36 +13,32 @@
 A free and open source manga reader
 
 [![Discord: Mihon](https://img.shields.io/discord/1195734228319617024.svg?label=&labelColor=6A7EC2&color=7389D8&logo=discord&logoColor=FFFFFF)](https://discord.gg/mihon)
-[![Mirror: GitLab](https://img.shields.io/badge/mirror-GitLab-orange.svg?labelColor=27303D)](https://gitlab.com/null2264/yokai)
-[![Mirror: git.aap](https://img.shields.io/badge/mirror-git.aap-red.svg?labelColor=27303D)](https://git.aap.my.id/null2264/yokai)
 
-[![CI](https://github.com/null2264/yokai/actions/workflows/build_push.yml/badge.svg?labelColor=27303D)](https://github.com/null2264/yokai/actions/workflows/build_push.yml)
-[![License: Apache-2.0](https://img.shields.io/github/license/null2264/yokai?labelColor=27303D&color=0877d2)](/LICENSE)
+[![CI](https://github.com/shadowguarda/yori/actions/workflows/build_push.yml/badge.svg?labelColor=27303D)](https://github.com/shadowguarda/yori/actions/workflows/build_push.yml)
+[![License: Apache-2.0](https://img.shields.io/github/license/shadowguarda/yori?labelColor=27303D&color=0877d2)](/LICENSE)
 [![Translation status](https://img.shields.io/weblate/progress/yokai?labelColor=27303D&color=946300)](https://hosted.weblate.org/engage/yokai/)
 
-<img src="./.github/readme-images/screens.gif" alt="Yokai screenshots" />
+<img src="./.github/readme-images/screens.gif" alt="Yori screenshots" />
 
 ## Download
 
-[![Yokai Stable](https://img.shields.io/github/v/release/null2264/yokai?maxAge=3600&label=Stable&labelColor=06599d&color=043b69&filter=v*)](https://github.com/null2264/yokai/releases)
-[![Yokai Nightly](https://img.shields.io/github/v/release/null2264/yokai-nightly?maxAge=3600&label=Nightly&labelColor=2c2c47&color=1c1c39&filter=r*)](https://github.com/null2264/yokai-nightly/releases)
+[![Yori Stable](https://img.shields.io/github/v/release/shadowguarda/yori?maxAge=3600&label=Stable&labelColor=06599d&color=043b69&filter=v*)](https://github.com/shadowguarda/yori/releases)
+[![Yori Nightly](https://img.shields.io/github/v/release/shadowguarda/yori-nightly?maxAge=3600&label=Nightly&labelColor=2c2c47&color=1c1c39&filter=r*)](https://github.com/shadowguarda/yori-nightly/releases)
 
 *Requires Android 8.0 or higher.*
 
-## About Fork
+## About
 
-This fork was created for personal usage, the name Yōkai is chosen in theme of my "paranormal" fork collection, all of them are made for personal purposes, to explore the language used to made them, explore new tech, or simply want to add my own twists that may not accepted by upstream as a PR.
+Yori is a personal fork of [Yokai](https://github.com/null2264/yokai) by null2264, which is itself a fork of Tachiyomi J2K. All credit for the original work goes to the upstream authors. Yori is licensed under Apache-2.0, same as upstream (see [LICENSE](/LICENSE)).
 
-~~Updates are sporadic, sometime fast, sometime slow.~~ I just did my thesis result seminar + final defense, but I still have revisions to do before I can fully go back to maintain Yōkai. I hope you can understand. As I said on the note in v1.10.0 release, I'll still look through PRs every now and then, so feel free to make a PR if you really need something.
-
-As of the time of writing, this fork is currently focusing on migrating to a much more modern infrastructure, some features may be added, but most changes are happening behind the scene.
+The main difference from upstream is a floating liquid glass navigation bar.
 
 ## Features
 
 <div align="left">
 
 <details open="">
-    <summary><h3>From Yōkai</h3></summary>
+    <summary><h3>From Yokai</h3></summary>
 
 * NSFW/SFW library filter (taken from [TachiyomiSY](https://github.com/jobobby04/TachiyomiSY)).
 * Fix backup incompatibility with upstream.
@@ -105,7 +101,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 <details><summary>Issues</summary>
 
-**Before reporting a new issue, take a look at the [FAQ](https://mihon.app/docs/faq/general), the [changelog](https://github.com/null2264/yokai/releases) and the already opened [issues](https://github.com/null2264/yokai/issues).**
+**Before reporting a new issue, take a look at the [FAQ](https://mihon.app/docs/faq/general), the [changelog](https://github.com/shadowguarda/yori/releases) and the already opened [issues](https://github.com/shadowguarda/yori/issues).**
 
 </details>
 
@@ -138,8 +134,8 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 Thank you to all the people who have contributed!
 
-<a href="https://github.com/null2264/yokai/graphs/contributors">
-    <img src="https://contrib.rocks/image?repo=null2264/yokai" alt="Yokai app contributors" title="Yokai app contributors" width="600"/>
+<a href="https://github.com/shadowguarda/yori/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=shadowguarda/yori" alt="Yori app contributors" title="Yori app contributors" width="600"/>
 </a>
 
 ### Disclaimer

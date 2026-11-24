@@ -35,9 +35,9 @@ import eu.kanade.tachiyomi.util.view.text
 import kotlin.random.Random
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import yokai.domain.library.LibraryPreferences
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import yori.domain.library.LibraryPreferences
+import yori.i18n.MR
+import yori.util.lang.getString
 
 class LibraryHeaderHolder(val view: View, val adapter: LibraryCategoryAdapter) :
     BaseFlexibleViewHolder(view, adapter, true) {

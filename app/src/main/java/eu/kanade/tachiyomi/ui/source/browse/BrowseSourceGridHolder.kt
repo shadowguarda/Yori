@@ -11,13 +11,13 @@ import dev.icerock.moko.resources.compose.stringResource
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.davidea.flexibleadapter.items.IFlexible
 import eu.kanade.tachiyomi.domain.manga.models.Manga
-import yokai.domain.manga.models.MangaCover
-import yokai.domain.manga.models.cover
-import yokai.i18n.MR
-import yokai.presentation.manga.components.BadgeSegment
-import yokai.presentation.manga.components.MangaComfortableGridItem
-import yokai.presentation.manga.components.MangaCompactGridItem
-import yokai.presentation.theme.YokaiTheme
+import yori.domain.manga.models.MangaCover
+import yori.domain.manga.models.cover
+import yori.i18n.MR
+import yori.presentation.manga.components.BadgeSegment
+import yori.presentation.manga.components.MangaComfortableGridItem
+import yori.presentation.manga.components.MangaCompactGridItem
+import yori.presentation.theme.YoriTheme
 
 /**
  * Class used to hold the displayed data of a manga in the library, like the cover or the title.
@@ -39,7 +39,7 @@ class BrowseSourceGridHolder(
 
     init {
         view.setContent {
-            YokaiTheme {
+            YoriTheme {
                 val badgeSegments = buildList {
                     if (cover.inLibrary)
                         add(

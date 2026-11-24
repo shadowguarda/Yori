@@ -3,7 +3,7 @@ package eu.kanade.tachiyomi.data.database.models
 import eu.kanade.tachiyomi.source.model.SChapter
 import eu.kanade.tachiyomi.source.model.decodeMemo
 import java.io.Serializable
-import yokai.domain.chapter.models.ChapterUpdate
+import yori.domain.chapter.models.ChapterUpdate
 
 interface Chapter : SChapter, Serializable {
 

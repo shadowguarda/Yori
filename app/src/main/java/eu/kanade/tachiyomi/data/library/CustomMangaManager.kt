@@ -17,16 +17,16 @@ import nl.adaptivity.xmlutil.serialization.XML
 import nl.adaptivity.xmlutil.serialization.XmlSerialName
 import nl.adaptivity.xmlutil.serialization.XmlValue
 import uy.kohesive.injekt.injectLazy
-import yokai.core.metadata.COMIC_INFO_EDITS_FILE
-import yokai.core.metadata.ComicInfo
-import yokai.core.metadata.ComicInfoPublishingStatus
-import yokai.core.metadata.copyFromComicInfo
-import yokai.domain.library.custom.interactor.CreateCustomManga
-import yokai.domain.library.custom.interactor.DeleteCustomManga
-import yokai.domain.library.custom.interactor.GetCustomManga
-import yokai.domain.library.custom.interactor.RelinkCustomManga
-import yokai.domain.library.custom.model.CustomMangaInfo
-import yokai.domain.library.custom.model.CustomMangaInfo.Companion.getMangaInfo
+import yori.core.metadata.COMIC_INFO_EDITS_FILE
+import yori.core.metadata.ComicInfo
+import yori.core.metadata.ComicInfoPublishingStatus
+import yori.core.metadata.copyFromComicInfo
+import yori.domain.library.custom.interactor.CreateCustomManga
+import yori.domain.library.custom.interactor.DeleteCustomManga
+import yori.domain.library.custom.interactor.GetCustomManga
+import yori.domain.library.custom.interactor.RelinkCustomManga
+import yori.domain.library.custom.model.CustomMangaInfo
+import yori.domain.library.custom.model.CustomMangaInfo.Companion.getMangaInfo
 
 class CustomMangaManager(val context: Context) {
     private val scope = CoroutineScope(Dispatchers.IO)
@@ -201,11 +201,11 @@ class CustomMangaManager(val context: Context) {
     @Serializable
     @XmlSerialName("ComicListYokai", "http://www.w3.org/2001/XMLSchema", "yk")
     data class ComicList(
-        val comics: List<ComicInfoYokai>? = null,
+        val comics: List<ComicInfoYori>? = null,
     ) {
         @Serializable
         @XmlSerialName("ComicInfoYokai", "http://www.w3.org/2001/XMLSchema", "yk")
-        data class ComicInfoYokai(
+        data class ComicInfoYori(
             @XmlValue(true) val value: ComicInfo,
             var id: Long? = null,
         ) {
@@ -218,7 +218,7 @@ class CustomMangaManager(val context: Context) {
                     description: String? = null,
                     genre: Array<String>? = null,
                     status: Int? = null,
-                ): ComicInfoYokai {
+                ): ComicInfoYori {
                     return create(
                         id = id,
                         title = title,
@@ -238,8 +238,8 @@ class CustomMangaManager(val context: Context) {
                     description: String? = null,
                     genre: String? = null,
                     status: Int? = null,
-                ): ComicInfoYokai {
-                    return ComicInfoYokai(
+                ): ComicInfoYori {
+                    return ComicInfoYori(
                         id = id,
                         value = ComicInfo(
                             title = null,

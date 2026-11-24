@@ -70,10 +70,11 @@ import eu.kanade.tachiyomi.util.system.ignoredSystemInsets
 import eu.kanade.tachiyomi.util.system.rootWindowInsetsCompat
 import eu.kanade.tachiyomi.util.system.toInt
 import eu.kanade.tachiyomi.util.system.toast
+import eu.kanade.tachiyomi.widget.GlassBottomNavigationView
 import eu.kanade.tachiyomi.widget.StatefulNestedScrollView
 import uy.kohesive.injekt.injectLazy
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import yori.i18n.MR
+import yori.util.lang.getString
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.pow
@@ -457,7 +458,8 @@ fun Controller.scrollViewWith(
                         onLeavingController?.invoke()
                     }
                     if (!customPadding && router.backstackSize == 2 && changeType == ControllerChangeType.PUSH_EXIT &&
-                        router.backstack.lastOrNull()?.controller !is DialogController
+                        router.backstack.lastOrNull()?.controller !is DialogController &&
+                        activityBinding?.bottomNav !is GlassBottomNavigationView
                     ) {
                         val parent = recycler.parent as? ViewGroup ?: return
                         val bottomNav = activityBinding?.bottomNav ?: return

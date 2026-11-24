@@ -94,15 +94,15 @@ import eu.kanade.tachiyomi.widget.StaggeredGridLayoutManagerAccurateOffset
 import kotlin.math.max
 import kotlin.math.pow
 import kotlin.math.roundToInt
-import yokai.presentation.theme.YokaiTheme
-import yokai.util.lang.getString
+import yori.presentation.theme.YoriTheme
+import yori.util.lang.getString
 
 inline fun ComponentActivity.setComposeContent(
     parent: CompositionContext? = null,
     crossinline content: @Composable () -> Unit,
 ) {
     setContent(parent) {
-        YokaiTheme {
+        YoriTheme {
             CompositionLocalProvider(
                 LocalTextStyle provides MaterialTheme.typography.bodySmall,
                 LocalContentColor provides MaterialTheme.colorScheme.onBackground,

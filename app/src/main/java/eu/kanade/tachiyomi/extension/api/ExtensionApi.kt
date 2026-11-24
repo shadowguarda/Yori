@@ -22,9 +22,9 @@ import okio.gzip
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.extension.repo.interactor.GetExtensionRepo
-import yokai.domain.extension.repo.interactor.UpdateExtensionRepo
-import yokai.domain.extension.repo.model.ExtensionRepo
+import yori.domain.extension.repo.interactor.GetExtensionRepo
+import yori.domain.extension.repo.interactor.UpdateExtensionRepo
+import yori.domain.extension.repo.model.ExtensionRepo
 
 internal class ExtensionApi {
 

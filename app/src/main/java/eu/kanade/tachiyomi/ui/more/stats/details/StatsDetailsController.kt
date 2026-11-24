@@ -67,8 +67,8 @@ import java.util.Calendar
 import java.util.Locale
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import yori.i18n.MR
+import yori.util.lang.getString
 import android.R as AR
 
 class StatsDetailsController :

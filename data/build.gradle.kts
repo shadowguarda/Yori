@@ -1,5 +1,5 @@
 plugins {
-    id("yokai.android.library")
+    id("yori.android.library")
     kotlin("multiplatform")
     alias(kotlinx.plugins.serialization)
     alias(libs.plugins.sqldelight)
@@ -24,13 +24,13 @@ kotlin {
 }
 
 android {
-    namespace = "yokai.data"
+    namespace = "yori.data"
 }
 
 sqldelight {
     databases {
         create("Database") {
-            packageName.set("yokai.data")
+            packageName.set("yori.data")
             dialect(libs.sqldelight.dialects.sql)
             schemaOutputDirectory.set(project.file("./src/commonMain/sqldelight"))
         }

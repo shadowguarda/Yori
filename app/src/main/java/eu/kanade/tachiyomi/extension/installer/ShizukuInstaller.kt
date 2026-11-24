@@ -18,8 +18,8 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import rikka.shizuku.Shizuku
 import rikka.shizuku.ShizukuRemoteProcess
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import yori.i18n.MR
+import yori.util.lang.getString
 
 class ShizukuInstaller(
     context: Context,

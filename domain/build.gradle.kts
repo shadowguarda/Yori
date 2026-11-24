@@ -1,5 +1,5 @@
 plugins {
-    id("yokai.android.library")
+    id("yori.android.library")
     kotlin("multiplatform")
     alias(kotlinx.plugins.serialization)
 }
@@ -26,7 +26,7 @@ kotlin {
 }
 
 android {
-    namespace = "yokai.domain"
+    namespace = "yori.domain"
 
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

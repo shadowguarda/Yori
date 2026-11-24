@@ -6,8 +6,8 @@ import java.time.format.DateTimeFormatter
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("yokai.android.application")
-    id("yokai.android.application.compose")
+    id("yori.android.application")
+    id("yori.android.application.compose")
     alias(kotlinx.plugins.serialization)
     alias(kotlinx.plugins.parcelize)
     alias(libs.plugins.aboutlibraries)
@@ -49,7 +49,7 @@ val supportedAbis = setOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
 
 android {
     defaultConfig {
-        applicationId = "eu.kanade.tachiyomi"
+        applicationId = "app.yori"
         versionCode = 162
         versionName = _versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -83,11 +83,10 @@ android {
 
     buildTypes {
         getByName("debug") {
-            applicationIdSuffix = ".debugYokai"
+            applicationIdSuffix = ".debug"
             versionNameSuffix = "-d${commitCount}"
         }
         getByName("release") {
-            applicationIdSuffix = ".yokai"
             isShrinkResources = true
             isMinifyEnabled = true
             proguardFiles("proguard-android-optimize.txt", "proguard-rules.pro")
@@ -107,7 +106,7 @@ android {
             signingConfig = signingConfigs.getByName("debug")
             matchingFallbacks.add("release")
             versionNameSuffix = "-r${commitCount}"
-            applicationIdSuffix = ".nightlyYokai"
+            applicationIdSuffix = ".nightly"
         }
     }
 

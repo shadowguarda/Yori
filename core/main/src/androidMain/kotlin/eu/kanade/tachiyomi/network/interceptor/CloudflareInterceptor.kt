@@ -17,8 +17,8 @@ import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
 import org.jsoup.Jsoup
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import yori.i18n.MR
+import yori.util.lang.getString
 
 class CloudflareInterceptor(
     private val context: Context,

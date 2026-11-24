@@ -72,23 +72,23 @@ import kotlinx.coroutines.withContext
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.category.interactor.GetCategories
-import yokai.domain.chapter.interactor.GetChapter
-import yokai.domain.chapter.interactor.InsertChapter
-import yokai.domain.chapter.interactor.UpdateChapter
-import yokai.domain.chapter.models.ChapterUpdate
-import yokai.domain.download.DownloadPreferences
-import yokai.domain.history.interactor.GetHistory
-import yokai.domain.history.interactor.UpsertHistory
-import yokai.domain.library.LibraryPreferences
-import yokai.domain.manga.interactor.GetManga
-import yokai.domain.manga.interactor.InsertManga
-import yokai.domain.manga.interactor.UpdateManga
-import yokai.domain.manga.models.MangaUpdate
-import yokai.domain.storage.StorageManager
-import yokai.domain.track.interactor.GetTrack
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import yori.domain.category.interactor.GetCategories
+import yori.domain.chapter.interactor.GetChapter
+import yori.domain.chapter.interactor.InsertChapter
+import yori.domain.chapter.interactor.UpdateChapter
+import yori.domain.chapter.models.ChapterUpdate
+import yori.domain.download.DownloadPreferences
+import yori.domain.history.interactor.GetHistory
+import yori.domain.history.interactor.UpsertHistory
+import yori.domain.library.LibraryPreferences
+import yori.domain.manga.interactor.GetManga
+import yori.domain.manga.interactor.InsertManga
+import yori.domain.manga.interactor.UpdateManga
+import yori.domain.manga.models.MangaUpdate
+import yori.domain.storage.StorageManager
+import yori.domain.track.interactor.GetTrack
+import yori.i18n.MR
+import yori.util.lang.getString
 
 /**
  * Presenter used by the activity to perform background operations.

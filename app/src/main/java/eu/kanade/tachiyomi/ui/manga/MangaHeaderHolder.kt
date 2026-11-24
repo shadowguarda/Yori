@@ -49,9 +49,9 @@ import eu.kanade.tachiyomi.util.view.resetStrokeColor
 import io.noties.markwon.Markwon
 import io.noties.markwon.SoftBreakAddsNewLinePlugin
 import android.text.method.LinkMovementMethod
-import yokai.i18n.MR
-import yokai.util.coil.loadManga
-import yokai.util.lang.getString
+import yori.i18n.MR
+import yori.util.coil.loadManga
+import yori.util.lang.getString
 import android.R as AR
 
 @SuppressLint("ClickableViewAccessibility")

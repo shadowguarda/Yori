@@ -1,8 +1,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import yokai.build.generatedBuildDir
+import yori.build.generatedBuildDir
 
 plugins {
-    id("yokai.android.library")
+    id("yori.android.library")
     kotlin("multiplatform")
     alias(libs.plugins.moko)
 }
@@ -32,7 +32,7 @@ kotlin {
 val generatedAndroidResourceDir = generatedBuildDir.resolve("android/res")
 
 android {
-    namespace = "yokai.i18n"
+    namespace = "yori.i18n"
 
     sourceSets {
         val main by getting
@@ -44,7 +44,7 @@ android {
 }
 
 multiplatformResources {
-    resourcesPackage.set("yokai.i18n")
+    resourcesPackage.set("yori.i18n")
 }
 
 tasks {

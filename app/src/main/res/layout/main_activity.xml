@@ -228,8 +228,9 @@
         android:layout_height="0dp"
         tools:ignore="KeyboardInaccessibleWidget" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <eu.kanade.tachiyomi.widget.GlassBottomNavigationView
         android:id="@+id/bottom_nav"
+        style="@style/Widget.Yori.GlassBottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -56,14 +56,14 @@ import okhttp3.Response
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import uy.kohesive.injekt.injectLazy
-import yokai.core.archive.ZipWriter
-import yokai.core.metadata.COMIC_INFO_FILE
-import yokai.core.metadata.ComicInfo
-import yokai.core.metadata.getComicInfo
-import yokai.domain.category.interactor.GetCategories
-import yokai.domain.download.DownloadPreferences
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import yori.core.archive.ZipWriter
+import yori.core.metadata.COMIC_INFO_FILE
+import yori.core.metadata.ComicInfo
+import yori.core.metadata.getComicInfo
+import yori.domain.category.interactor.GetCategories
+import yori.domain.download.DownloadPreferences
+import yori.i18n.MR
+import yori.util.lang.getString
 
 /**
  * This class is the one in charge of downloading chapters.

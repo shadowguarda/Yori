@@ -20,8 +20,8 @@ import eu.kanade.tachiyomi.source.sourcePreferences
 import eu.kanade.tachiyomi.ui.library.LibrarySort
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import yokai.domain.base.BasePreferences
-import yokai.domain.ui.settings.ReaderPreferences
+import yori.domain.base.BasePreferences
+import yori.domain.ui.settings.ReaderPreferences
 
 class PreferenceBackupRestorer(
     private val context: Context,
