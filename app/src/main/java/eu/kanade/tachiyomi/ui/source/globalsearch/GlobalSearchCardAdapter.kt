@@ -11,7 +11,7 @@ import yori.domain.ui.UiPreferences
  *
  * @param controller instance of [GlobalSearchController].
  */
-class GlobalSearchCardAdapter(controller: GlobalSearchController) :
+class GlobalSearchCardAdapter(val controller: GlobalSearchController) :
     FlexibleAdapter<GlobalSearchMangaItem>(null, controller, true) {
 
     /**
