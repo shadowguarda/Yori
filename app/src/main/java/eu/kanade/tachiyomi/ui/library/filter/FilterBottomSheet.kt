@@ -30,17 +30,13 @@ import eu.kanade.tachiyomi.util.system.rootWindowInsetsCompat
 import eu.kanade.tachiyomi.util.system.withIOContext
 import eu.kanade.tachiyomi.util.system.withUIContext
 import eu.kanade.tachiyomi.util.view.activityBinding
-import eu.kanade.tachiyomi.util.view.collapse
 import eu.kanade.tachiyomi.util.view.hide
 import eu.kanade.tachiyomi.util.view.inflate
-import eu.kanade.tachiyomi.util.view.isCollapsed
 import eu.kanade.tachiyomi.util.view.isExpanded
-import eu.kanade.tachiyomi.util.view.isHidden
 import eu.kanade.tachiyomi.util.view.setText
 import kotlin.math.max
 import kotlin.math.roundToInt
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -149,6 +145,7 @@ class FilterBottomSheet @JvmOverloads constructor(context: Context, attrs: Attri
             },
         )
 
+        // Stays fully hidden until the user opens it from the toolbar filter / display button.
         sheetBehavior?.hide()
         binding.expandCategories.setOnClickListener {
             onGroupClicked(ACTION_EXPAND_COLLAPSE_ALL)
@@ -161,22 +158,6 @@ class FilterBottomSheet @JvmOverloads constructor(context: Context, attrs: Attri
         }
 
         sheetBehavior?.isGestureInsetBottomIgnored = true
-
-        val activeFilters = hasActiveFiltersFromPref() && !controller.isSubClass
-        if (activeFilters && sheetBehavior.isHidden() && sheetBehavior?.skipCollapsed == false) {
-            sheetBehavior?.collapse()
-            controller.viewScope.launchUI {
-                var hasScrolled = false
-                binding.filterScroll.setOnScrollChangeListener { _, _, _, _, _ ->
-                    hasScrolled = true
-                }
-                delay(2000)
-                if (sheetBehavior.isCollapsed() && !hasScrolled) {
-                    sheetBehavior?.hide()
-                }
-                binding.filterScroll.setOnScrollChangeListener(null)
-            }
-        }
 
         post {
             libraryRecycler ?: return@post
@@ -323,16 +304,6 @@ class FilterBottomSheet @JvmOverloads constructor(context: Context, attrs: Attri
     }
 
     private fun hasActiveFilters() = filterItems.any { it.isActivated }
-
-    private fun hasActiveFiltersFromPref(): Boolean {
-        return preferences.filterDownloaded().get() > 0 ||
-            preferences.filterUnread().get() > 0 ||
-            preferences.filterCompleted().get() > 0 ||
-            preferences.filterTracked().get() > 0 ||
-            preferences.filterMangaType().get() > 0 ||
-            preferences.filterBookmarked().get() > 0 ||
-            FILTER_TRACKER.isNotEmpty()
-    }
 
     private fun createTags() {
         downloaded = inflate(R.layout.filter_tag_group) as FilterTagGroup
