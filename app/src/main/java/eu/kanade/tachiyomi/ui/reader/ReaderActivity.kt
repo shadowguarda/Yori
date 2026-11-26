@@ -35,6 +35,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
+import android.view.animation.OvershootInterpolator
 import android.widget.TextView
 import androidx.activity.BackEventCompat
 import androidx.activity.OnBackPressedCallback
@@ -146,6 +147,8 @@ import eu.kanade.tachiyomi.util.view.popupMenu
 import eu.kanade.tachiyomi.util.view.setAction
 import eu.kanade.tachiyomi.util.view.setMessage
 import eu.kanade.tachiyomi.util.view.snack
+import eu.kanade.tachiyomi.widget.ExpressiveMotion
+import eu.kanade.tachiyomi.widget.applyLiquidGlassSurface
 import eu.kanade.tachiyomi.widget.doOnEnd
 import eu.kanade.tachiyomi.widget.doOnStart
 import java.io.ByteArrayOutputStream
@@ -320,7 +323,7 @@ class ReaderActivity : BaseActivity<ReaderActivityBinding>() {
         wic.isAppearanceLightStatusBars = lightStatusBar
         wic.isAppearanceLightNavigationBars = lightStatusBar
 
-        binding.appBar.setBackgroundColor(contextCompatColor(R.color.surface_alpha))
+        binding.appBar.applyLiquidGlassSurface(28f)
         ViewCompat.setBackgroundTintList(
             binding.readerNav.root,
             ColorStateList.valueOf(contextCompatColor(R.color.surface_alpha)),
@@ -773,11 +776,7 @@ class ReaderActivity : BaseActivity<ReaderActivityBinding>() {
     private fun initializeMenu() {
         // Set binding.toolbar
         setSupportActionBar(binding.toolbar)
-        val primaryColor = ColorUtils.setAlphaComponent(
-            getResourceColor(R.attr.colorSurface),
-            200,
-        )
-        binding.appBar.setBackgroundColor(primaryColor)
+        binding.appBar.applyLiquidGlassSurface(28f)
         window.statusBarColor = Color.TRANSPARENT
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.toolbar.navigationIcon?.setTint(getResourceColor(R.attr.actionBarTintColor))
@@ -987,11 +986,12 @@ class ReaderActivity : BaseActivity<ReaderActivityBinding>() {
                 window.navigationBarColor = getResourceColor(R.attr.colorSurface)
             }
             binding.appBar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                leftMargin = systemInsets.left
-                rightMargin = systemInsets.right
+                leftMargin = 12.dpToPx + systemInsets.left
+                rightMargin = 12.dpToPx + systemInsets.right
+                topMargin = 8.dpToPx + systemInsets.top
             }
             binding.toolbar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                topMargin = systemInsets.top
+                topMargin = 0
             }
             binding.chaptersSheet.chaptersBottomSheet.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 leftMargin = systemInsets.left
@@ -1185,6 +1185,12 @@ class ReaderActivity : BaseActivity<ReaderActivityBinding>() {
                     }
                     toolbarAnimation.doOnEnd { delayTitleScroll() }
                     binding.appBar.startAnimation(toolbarAnimation)
+                    binding.appBar.scaleX = 0.94f
+                    binding.appBar.animate()
+                        .scaleX(1f)
+                        .setDuration(ExpressiveMotion.STANDARD_DURATION_MS)
+                        .setInterpolator(OvershootInterpolator(1.2f))
+                        .start()
                 } else {
                     delayTitleScroll()
                 }
