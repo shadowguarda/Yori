@@ -326,6 +326,7 @@
         <item name="android:stateListAnimator">@animator/icon_btn_state_list_anim</item>
         <item name="android:textColor">?attr/colorOnBackground</item>
         <item name="cornerRadius">20dp</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Yori.Pill</item>
     </style>
 
     <style name="Widget.Tachiyomi.Button.OutlinedButton" parent="Widget.Material3.Button.OutlinedButton">
@@ -370,6 +371,7 @@
         <item name="android:textColor">?attr/colorOnSurface</item>
         <item name="android:textAppearance">@style/Theme.TextAppearance.Chip</item>
         <item name="chipStrokeWidth">0dp</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Yori.Pill</item>
         <item name="android:checkable">false</item>
     </style>
 
@@ -386,6 +388,7 @@
         <item name="closeIconVisible">true</item>
         <item name="closeIcon">@drawable/ic_arrow_drop_down_24dp</item>
         <item name="closeIconTint">?attr/colorOnBackground</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Yori.Pill</item>
     </style>
 
     <style name="Widget.Tachiyomi.Chip.AddTag" parent="Widget.Material3.Chip.Suggestion">
@@ -396,6 +399,7 @@
         <item name="chipStrokeColor">?colorOnSurface</item>
         <item name="chipStrokeWidth">1dp</item>
         <item name="android:checkable">false</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Yori.Pill</item>
     </style>
 
 

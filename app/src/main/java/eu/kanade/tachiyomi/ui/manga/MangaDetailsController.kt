@@ -16,6 +16,7 @@ import android.graphics.drawable.Icon
 import android.os.Build
 import android.os.Bundle
 import android.service.chooser.ChooserAction
+import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -299,7 +300,10 @@ class MangaDetailsController :
             }
         })
         binding.fab.transitionName = "details start reading transition"
-        binding.fab.setOnClickListener { readNextChapter(it) }
+        binding.fab.setOnClickListener {
+            it.performHapticFeedback(HapticFeedbackConstants.CONTEXT_CLICK)
+            readNextChapter(it)
+        }
 
         presenter.onCreateLate()
         binding.swipeRefresh.isRefreshing = presenter.isLoading
